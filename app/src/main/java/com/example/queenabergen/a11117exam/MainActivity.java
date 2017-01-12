@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     TextView mTextView = (TextView) findViewById(R.id.textView);
                     ImageView mImageView = (ImageView) findViewById(R.id.imageView);
 
-                    for(int i = 0; i < keys.size(); i++){
+                    for (int i = 0; i < keys.size() - 1; i++) {
                         AvailableKeys mKey = keys.get(i);
                         String mName = mKey.getmName().toString();
                         String mTextColor = mKey.getmTextColor().toString();
@@ -55,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
                     }
 
 
-
-
                 } else {
                     Log.d(TAG, "ERROR: Something Happened" + response.body());
                 }
@@ -64,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Response> call, Throwable t) {
-                Log.d("Error", t.getMessage());
+                Log.d("Error", t.getMessage().toString());
             }
         });
 
@@ -74,17 +72,5 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    public void gimmeDatJSON(AvailableKeys keys) {
-        TextView mTextView = (TextView) findViewById(R.id.textView);
-        ImageView mImageView = (ImageView) findViewById(R.id.imageView);
-        String setNameTo = keys.getmName();
-        String setColorTo = keys.getmTextColor();
-        String setImageTo = keys.getmUrl();
-        mTextView.setText(setNameTo);
-        mTextView.setTextColor(Integer.parseInt(setColorTo));
-        mImageView.setImageResource(Integer.parseInt(setImageTo));
-
-
-    }
 }
 
