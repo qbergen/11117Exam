@@ -1,5 +1,7 @@
 package com.example.queenabergen.a11117exam;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "Success: " + response.body());
 
 
+
                 } else {
                     Log.d(TAG, "ERROR: Something Happened" + response.body());
                 }
@@ -43,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-      
+        FragmentManager fragmentManager= getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.activity_main, new UserFragment(), TAG);
+        fragmentTransaction.commit();
     }
 }
