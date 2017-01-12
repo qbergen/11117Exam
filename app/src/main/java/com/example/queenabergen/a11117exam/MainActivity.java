@@ -2,9 +2,16 @@ package com.example.queenabergen.a11117exam;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -14,12 +21,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "THIS IS MY TAG LINE";
+    List<AvailableKeys> snatchKeys;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://jsjrobotics.nyc/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -32,6 +39,21 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Response> mCall, retrofit2.Response<Response> response) {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "Success: " + response.body());
+                    List<AvailableKeys> keys = response.body().getMajorKey();
+                    TextView mTextView = (TextView) findViewById(R.id.textView);
+                    ImageView mImageView = (ImageView) findViewById(R.id.imageView);
+
+                    for(int i = 0; i < keys.size(); i++){
+                        AvailableKeys mKey = keys.get(i);
+                        String mName = mKey.getmName().toString();
+                        String mTextColor = mKey.getmTextColor().toString();
+                        String mURL = mKey.getmUrl().toString();
+                        mTextView.setText(mName);
+                        mTextView.setTextColor(Color.parseColor(mTextColor));
+                        Picasso.with(getApplicationContext()).load(mURL).into(mImageView);
+
+                    }
+
 
 
 
@@ -46,9 +68,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        FragmentManager fragmentManager= getFragmentManager();
+        FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.activity_main, new UserFragment(), TAG);
         fragmentTransaction.commit();
     }
+
+    public void gimmeDatJSON(AvailableKeys keys) {
+        TextView mTextView = (TextView) findViewById(R.id.textView);
+        ImageView mImageView = (ImageView) findViewById(R.id.imageView);
+        String setNameTo = keys.getmName();
+        String setColorTo = keys.getmTextColor();
+        String setImageTo = keys.getmUrl();
+        mTextView.setText(setNameTo);
+        mTextView.setTextColor(Integer.parseInt(setColorTo));
+        mImageView.setImageResource(Integer.parseInt(setImageTo));
+
+
+    }
 }
+
