@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String BASEURL = "http://jsjrobotics.nyc/";
     List<AvailableKeys> snatchKeys;
 
+//    SwipeRefreshLayout swipeRefreshLayout = new SwipeRefreshLayout(getApplicationContext());
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                         mTextView.setText(mName);
                         mTextView.setTextColor(Color.parseColor(mTextColor));
                         Log.d(TAG, mURL);
-                        Picasso.with(getApplicationContext()).load(BASEURL+mURL).into(mImageView);
+                        Picasso.with(getApplicationContext()).load(BASEURL + mURL).into(mImageView);
                     }
 
 
