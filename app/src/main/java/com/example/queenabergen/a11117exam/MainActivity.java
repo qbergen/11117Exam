@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,8 +20,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
-
+    private RecyclerViewAdapter mAdapter;
+    private LinearLayoutManager linearLayoutManager;
     private static final String TAG = "THIS IS MY TAG LINE";
+    private static final String BASEURL = "http://jsjrobotics.nyc/";
     List<AvailableKeys> snatchKeys;
 
     @Override
@@ -50,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
                         String mURL = mKey.getmUrl().toString();
                         mTextView.setText(mName);
                         mTextView.setTextColor(Color.parseColor(mTextColor));
-                        Picasso.with(getApplicationContext()).load(mURL).into(mImageView);
-
+                        Log.d(TAG, mURL);
+                        Picasso.with(getApplicationContext()).load(BASEURL+mURL).into(mImageView);
                     }
 
 
@@ -66,11 +69,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+//        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recView);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+//        recyclerView.setLayoutManager(linearLayoutManager);
+//        mAdapter = new RecyclerViewAdapter();
+//        recyclerView.setAdapter(mAdapter);
+
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.activity_main, new UserFragment(), TAG);
         fragmentTransaction.commit();
     }
+
 
 }
 
